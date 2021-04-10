@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block contenido %} 
+{% load static %}
+<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+  </div>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="{% static 'img/free.jpeg' %}" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="{% static 'img/platforms.jpeg' %}" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="{% static 'img/schedule.jpeg' %}" class="d-block w-100" alt="...">
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+<hr>
+    <h2 style="font-weight: bolder; color: crimson; text-align: center;">Peliculas disponibles</h2>
+    <br>
+    <div class="container-fluid">
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+            {% for peliculas in Peliculas %}
+        <div class="col-auto">
+            <div class="card-group">
+                <div style="height: min-content" class="card">
+                    <img src=" {{ peliculas.imagen}}" class="card-img-top" alt="">
+                    <div class="card-body">
+                        {% if user.is_authenticated %}
+                        <h5 class="card-title"><a href="{% url 'editarPelicula' peliculas.pk %}">{{peliculas.nombre}}</a></h5>
+                        {% else %}
+                        <h5 class="card-title"><strong>{{peliculas.nombre | title}}</strong></h5>
+                        {% endif %}
+                        <p class="card-text">{{ peliculas.descripcion}}</p>
+                    Productora: <strong>{{ peliculas.productora}}</strong>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-muted">Año: {{peliculas.año}}</small>
+                            {% if user.is_authenticated %}
+                            <button style="margin-left: 70%;" class="btn btn-danger">
+                                <a href="{% url 'eliminarPelicula' peliculas.pk %}"><i class="fa fa-trash"></i></a>
+                            </button>
+                            <!--<button style="margin-left: 70%;" class="btn btn-secondary">
+                                <a href="{% url 'pelicula_view' peliculas.pk %}"><i class="fa fa-eye"></i></a>
+                            </button>-->
+                            {% endif %}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+            {% endfor %} 
+    </div>
+    </div>
+    <br>
+{% endblock %}

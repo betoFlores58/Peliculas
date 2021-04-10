@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block contenido %}
+<div style="text-align: center; font-weight: bolder; color: chartreuse;" class="">
+        <h2> {{ peliculas.nombre }}  </h2>
+</div>
+<div class="card">
+        <div class="card-image">
+            <figure class="image is-4by3">
+            <img src="{{ peliculas.imagen }}" alt="Placeholder image">
+            </figure>
+        </div>
+        <div class="card-content">
+            <div class="media">
+            <div class="media-left">
+                <figure>
+                <img style="width: 200px;height: 150px;" src="{{ peliculas.imagen }}" alt="Placeholder image">
+                </figure>
+            </div>
+            <div class="media-content">
+                <p class="title is-4"><strong>$ {{ peliculas.nombre }}</strong></p>
+                <p>{{peliculas.descripcion}}</p>
+                <small><strong>Productora:</strong> {{ peliculas.productora }}</small>
+                <small><strong>Año:</strong> {{ peliculas.año }}</small>
+                <br>
+                <button class="button is-warning is-hovered">
+                    <span class="icon is-small">
+                    <i class="fas fa-heart"></i>
+                    </span>
+                </button>
+                <a href="{% url 'editarPelicula' pelicula.pk %}">
+                    <button class="button is-info is-hovered">
+                        <span class="icon is-small">
+                            <i class="fas fa-edit"></i>
+                        </span>
+                    </button>
+                </a>
+                <a href="{% url 'eliminarPelicula' pelicula.pk %}">
+                    <button class="button is-danger is-hovered">
+                        <span class="icon is-small">
+                            <i class="fas fa-trash"></i>
+                        </span>
+                    </button>
+                </a>
+            </div>
+            </div>
+    </div>
+        <center>
+            <button class="button is-success is-rounded">Comprar ahora</button>
+        </center>
+        <br>
+</div>
+{% endblock %}

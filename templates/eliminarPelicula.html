@@ -1,0 +1,18 @@
+{% extends 'base.html' %} 
+{% load crispy_forms_tags %}
+{% block contenido %} 
+<br>
+<form method="post" novalidate>{% csrf_token %}
+    <div class="row">
+        <div class="col-11">
+            <p>Desea eliminar la siguiente pelicula: <strong>"{{Peliculas.nombre}}" </strong>?</p>
+            {{ form|crispy }}
+        </div>
+    </div>
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a href="{% url 'home' %}">
+        <button type="button" class="btn btn-primary">Regresar</button>
+    </a>
+</form>
+<br>
+{% endblock %} 

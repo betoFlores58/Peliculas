@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+    {% block contenido %} 
+    <style>
+        body{
+            background: #005C97;  /* fallback for old browsers */
+            background: -webkit-linear-gradient(to top, #363795, #005C97);  /* Chrome 10-25, Safari 5.1-6 */
+            background: linear-gradient(to top, #363795, #005C97); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+        }
+    </style>
+    <body>
+        <form method="post" novalidate>{% csrf_token %}
+            <div class="row">
+                <div class="col-8">
+                        <h2 style="color: chartreuse;">Agrega un nueva pelicula</h2>
+                    {{form.nombre|as_crispy_field}}
+                    {{form.productora|as_crispy_field}}
+                    {{form.imagen|as_crispy_field}}
+                    {{form.año|as_crispy_field}}
+                </div>
+                <div class="col-8">
+                    {{form.descripcion|as_crispy_field}}
+                </div>
+            </div>
+            <br>
+            <button type="submit" class="btn btn-success">Agregar</button>
+        </form>
+    </body>
+        <br>
+{% endblock %} 
