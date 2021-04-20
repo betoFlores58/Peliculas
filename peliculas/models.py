@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 
+#DECLARACION DE MODELOS DE PRODUCTORA, POST Y CONTACTO PARA SQLITE
 class Productora(models.Model):
     nombre = models.CharField(max_length=50)
 
@@ -25,6 +26,7 @@ class Post(models.Model):
 def get_absolute_url(self):
         return reverse('peliculas', args=[str(self.id)])
 
+#OPCIONES DE CONTACTO (TIPO)
 opciones = [
     [0,"Consulta"],
     [1,"Queja"],

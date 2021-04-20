@@ -1,10 +1,10 @@
 from django.urls import path
-from .views import HomeListView, peliculaView, peliculaCreateView,peliculaUpdateView,peliculaDeleteView, CatalogoTemplateView, registro,catalogo,contacto, UserChangePasswordView
+from .views import HomeListView, peliculaView, peliculaCreateView,peliculaUpdateView,peliculaDeleteView, CatalogoTemplateView, registro,catalogo,contacto, UserChangePasswordView, ResetPasswordView
 from django.shortcuts import render
 from django.contrib.auth import views as auth_views
 from django.conf.urls import url
 
-
+#DECLARAMOS LOS PATH O RUTAS EN DONDE PODREMOS ACCDER Y LE ASIGNAMOS UN NOMBRE
 urlpatterns = [
     path('<int:pk>/ver', peliculaView.as_view(), name='pelicula_view'),
     path('', HomeListView.as_view(), name='home'),
@@ -17,4 +17,5 @@ urlpatterns = [
     path('registro/',registro,name="registro"),
     #path('changePassword/',UserChangePasswordView.as_view(),name='user_change_password'),
     path('change-password/',auth_views.PasswordChangeView.as_view(template_name='registration/change-password.html',success_url = '/'),name='change_password'),
+    path('reset/password/',ResetPasswordView.as_view(),name="reset_password"),
 ]

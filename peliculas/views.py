@@ -9,8 +9,14 @@ from django.contrib import messages
 from .forms import ContactoForm
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.models import User
-from django.http import JsonResponse, request
+from django.http import HttpResponseRedirect, JsonResponse, request
+from peliculas.forms import ResetPasswordForm
 
+#NO SE USA
+def index(request):
+    return render(request,'user/index.html')
+
+#No se usa
 def catalogo(request):
     peliculas = Post.objects.all()
     data={
@@ -18,6 +24,7 @@ def catalogo(request):
     }
     return render(request,'catalogo.html')
 
+#DEFINICION DEL FROM DE CONTACTO Y REDIRECCIONAMIENTO CON MENSAJE
 def contacto(request):
     data = {
         'form': ContactoForm()
@@ -34,7 +41,7 @@ def contacto(request):
             
     return render(request,'contacto.html',data)
 
-
+#Registro para crear nuevo usuario
 def registro(request):
     data = {
         'form': CustomUserCreationForm
@@ -49,7 +56,8 @@ def registro(request):
             return redirect(to="home")
         data["form"]=formulario
     return render(request,'registration/registro.html',data)
-    
+
+#DECLARACION DE CLASES TEMPLATES ASIGNANDO EL MODELO Y TEMPLATE CORRESPONDIENTE
 class HomeListView(ListView):
     model = Post
     template_name = 'home.html'
@@ -83,6 +91,8 @@ class peliculaDeleteView(DeleteView):
     context_object_name = 'Peliculas'
     success_url = reverse_lazy('home')
 
+
+#Cambiar contraseña de un usuario
 class UserChangePasswordView(LoginRequiredMixin, FormView):
     model = User
     form_class = PasswordChangeForm
@@ -108,3 +118,21 @@ class UserChangePasswordView(LoginRequiredMixin, FormView):
         except Exception as e:
             data ['error'] = str(e)
         return JsonResponse(data)
+
+#INTENTO DE RESETEO DE PASSWORD (NO SE USA)
+class ResetPasswordView(FormView):
+    form_class = ResetPasswordForm
+    template_name = 'registration/resetpwd.html'
+    success_url = reverse_lazy('change_password') 
+
+    def dispatch(self,request, *args, **kwargs):
+        return super().dispatch(request,*args,**kwargs)
+
+    def form_valid(self,form):
+        pass
+        return HttpResponseRedirect(self.success_url)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Rseteo de contraseña'
+        return context
